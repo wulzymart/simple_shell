@@ -44,17 +44,32 @@ char *get_cmd_path(char *str, var_list *env_list)
 	return (NULL);
 }
 /**
+ * get_status - gets exit status of exited process
+ * @status: status integer
+ * @p_stat: where to save the status
+ * @e: address that holds return of execve
+ * Return: 1, 0, a helper function, all is needed is to save the status
+*/
+int get_status(int status, size_t *p_stat, int *e)
+{
+	*p_stat = WEXITSTATUS(status);
+	if ((*p_stat != 0) || *e != 0)
+		return (1);
+	return (0);
+}
+/**
  * execute - executes any passed arguement count
  * @av: arguement vector
  * @env_list: environment list
  * @cmd_cnt: command count
+ * @p_stat: last exit status
  * Return: 0 if success, -1
 */
-int execute(char **av, var_list *env_list, size_t *cmd_cnt)
+int execute(char **av, var_list *env_list, size_t *cmd_cnt, size_t *p_stat)
 {
 	int (*f)(char **av, size_t cmd_count, var_list *head), i;
 	char *path;
-	int a, e = 0, status;
+	int a, e = 0, status; /* e records return of execve, to check failure*/
 
 	f = inb_functs(av[0]);
 	if (f != NULL)
@@ -86,8 +101,7 @@ int execute(char **av, var_list *env_list, size_t *cmd_cnt)
 			free(path);
 			*cmd_cnt = *cmd_cnt + 1;
 	}
-	if ((WIFEXITED(status) && WEXITSTATUS(status) != 0) || e != 0)
-		return (1);
-
+	if (WIFEXITED(status))
+		return (get_status(status, p_stat, &e));
 	return (0);
 }

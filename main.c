@@ -10,7 +10,7 @@ int main(int ac, char **av)
 {
 	var_list *env_list = NULL;
 	char *line = NULL, *delim = " \n", p = 0; /*p from pipe*/
-	size_t n = 0, cmd_cnt = 1;
+	size_t n = 0, cmd_cnt = 1, exstat = 0;
 
 	(void)ac;
 	env_list = build_env_list(&env_list, environ);
@@ -20,10 +20,10 @@ int main(int ac, char **av)
 		if (_getline(&line, &n, stdin) == -1)
 			break;
 		p = !isatty(STDIN_FILENO);
-		av = pre_proc(line, delim, env_list, &cmd_cnt);
+		av = pre_proc(line, delim, env_list, &cmd_cnt, &exstat);
 		if (!av)
 			continue;
-		an_exec(av, env_list, &cmd_cnt);
+		an_exec(av, env_list, &cmd_cnt, &exstat);
 		v_free(av);
 		free(line);
 		line = NULL;

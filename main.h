@@ -53,6 +53,7 @@ char *_strcat(char *dest, const char *src);
 int _strncmp(const char *s1, const char *s2, size_t n);
 char *_strdup(const char *str);
 char **strsplt(char *input, const char *delim);
+char *num2str(unsigned long n);
 
 /*handle vectors (NULL terminated string arrays)*/
 int v_count(char **vector);
@@ -104,10 +105,17 @@ int check_args(char **av, var_list *head, size_t count);
 char **v_free_NULL(char **av);
 char **getline_EOF_syn_err(var_list *head, size_t *count);
 int alloc_exec(int *f, int *g, int *h, int *d, char **sv,
-var_list *head, size_t *count);
-int an_exec(char **sv, var_list *head, size_t *count);
-char **pre_proc(char *line, const char *delim, var_list *head, size_t *count);
+var_list *head, size_t *count, size_t *p_stat);
+int an_exec(char **sv, var_list *head, size_t *count, size_t *p_stat);
+char **pre_proc(char *line, const char *delim, var_list *head, size_t *count,
+size_t *p_stat);
+
+/* arguement preprocessing for aliases, comments and shell replacement*/
+char **prc_cmnts(char **av);
+char **reset_vec(char **av, int old_c, int new_c);
+char **sh_rep(char **av, size_t *p_st, var_list *head);
+char **procs(char **av, size_t *p_st, var_list *head);
 
 /*app execution*/
-int execute(char **av, var_list *env_list, size_t *cmd_cnt);
+int execute(char **av, var_list *env_list, size_t *cmd_cnt, size_t *p_stat);
 #endif
