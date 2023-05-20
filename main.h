@@ -101,6 +101,12 @@ int resetdir(int n, char *pwd, char *oldpwd, char *buffer);
 int _cd(var_list *env_list, char *dir);
 int issep(char *str, int *n);
 int check_args(char **av, var_list *head, size_t count);
+char **v_free_NULL(char **av);
+char **getline_EOF_syn_err(var_list *head, size_t *count);
+int alloc_exec(int *f, int *g, int *h, int *d, char **sv,
+var_list *head, size_t *count);
+int an_exec(char **sv, var_list *head, size_t *count);
+char **pre_proc(char *line, const char *delim, var_list *head, size_t *count);
 
 /*app execution*/
 int execute(char **av, var_list *env_list, size_t *cmd_cnt);

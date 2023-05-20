@@ -35,11 +35,11 @@ char *_getenv(var_list **env_list, const char *name)
 	variable = _strdup(splitted[1]);
 	if (!variable)
 	{
-		free(splitted);
+		v_free(splitted);
 		free(found);
 		return (NULL);
 	}
-	free(splitted);
+	v_free(splitted);
 	free(found);
 	return (variable);
 }
