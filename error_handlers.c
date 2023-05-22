@@ -7,11 +7,11 @@
 */
 void print_err(char *prc_path, size_t count, const char *err_message)
 {
-	_put(prc_path);
-	_put(": ");
-	print_digits(count);
-	_put(": ");
-	_puts(err_message);
+	_put_e(prc_path);
+	_put_e(": ");
+	print_digits_e(count);
+	_put_e(": ");
+	_puts_e(err_message);
 	free(prc_path);
 }
 /**
@@ -24,13 +24,13 @@ void print_err(char *prc_path, size_t count, const char *err_message)
 void print_err_nf(char *prc_path, size_t count, char *cmd,
 const char *err_message)
 {
-	_put(prc_path);
-	_put(": ");
-	print_digits(count);
-	_put(": ");
-	_put(cmd);
-	_put(": ");
-	_puts(err_message);
+	_put_e(prc_path);
+	_put_e(": ");
+	print_digits_e(count);
+	_put_e(": ");
+	_put_e(cmd);
+	_put_e(": ");
+	_puts_e(err_message);
 	free(prc_path);
 }
 /**
@@ -41,12 +41,12 @@ const char *err_message)
 */
 void print_exit_err(char *prc_path, size_t count, const char *str)
 {
-	_put(prc_path);
-	_put(": ");
-	print_digits(count);
-	_put(": ");
-	_put("exit: Illegal number: ");
-	_puts(str);
+	_put_e(prc_path);
+	_put_e(": ");
+	print_digits_e(count);
+	_put_e(": ");
+	_put_e("exit: Illegal number: ");
+	_puts_e(str);
 	free(prc_path);
 }
 /**
@@ -57,12 +57,12 @@ void print_exit_err(char *prc_path, size_t count, const char *str)
 */
 void print_cd_err(char *prc_path, size_t count, const char *str)
 {
-	_put(prc_path);
-	_put(": ");
-	print_digits(count);
-	_put(": ");
-	_put("cd: cant cd to ");
-	_puts(str);
+	_put_e(prc_path);
+	_put_e(": ");
+	print_digits_e(count);
+	_put_e(": ");
+	_put_e("cd: cant cd to ");
+	_puts_e(str);
 	free(prc_path);
 }
 /**
@@ -73,14 +73,14 @@ void print_cd_err(char *prc_path, size_t count, const char *str)
 */
 void print_err_sep(char *prc_path, size_t count, char *sep)
 {
-	_put(prc_path);
-	_put(": ");
-	print_digits(count);
-	_put(": ");
-	_put("Syntax error: ");
-	_putchar('"');
-	_put(sep);
-	_putchar('"');
-	_puts(" unexpected");
+	_put_e(prc_path);
+	_put_e(": ");
+	print_digits_e(count);
+	_put_e(": ");
+	_put_e("Syntax error: ");
+	_putchar_e('"');
+	_put_e(sep);
+	_putchar_e('"');
+	_puts_e(" unexpected");
 	free(prc_path);
 }
