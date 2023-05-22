@@ -11,13 +11,16 @@ int main(int ac, char **av)
 	var_list *env_list = NULL;
 	char **sv, *line = NULL, *delim = " \n", p = 0; /*p from pipe*/
 	size_t n = 0, cmd_cnt = 1, exstat = 0;
+	FILE *fd;
 
+	(void)av;
+	fd = stdin;
 	env_list = build_env_list(&env_list, environ);
 	while (1 && !p)
 	{
 		if (ac == 1)
 		_put("$ ");
-		if (getline(&line, &n, stdin) == -1)
+		if (getline(&line, &n, fd) == -1)
 			break;
 		p = !isatty(STDIN_FILENO);
 		sv = pre_proc(line, delim, env_list, &cmd_cnt, &exstat, fd);
