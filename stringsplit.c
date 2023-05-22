@@ -45,14 +45,15 @@ unsigned int strcount(char *str, const char *delim)
 */
 char **strsplt(char *input, const char *delim)
 {
-	char **sv; /* for our vector */
+	char **sv = NULL; /* for our vector */
 	unsigned int sc; /*string count*/
 	unsigned int j = 0;
 
 	if (!input)
 		return (NULL);
 	sc = strcount(input, delim);
-	sv = malloc(sizeof(char *) * (sc + 1));
+	if (sc)
+		sv = malloc(sizeof(char *) * (sc + 1));
 	if (!sv)
 		return (NULL);
 	sv[sc] = NULL;

@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
 #include <dirent.h>
@@ -108,7 +109,7 @@ int alloc_exec(int *f, int *g, int *h, int *d, char **sv,
 var_list *head, size_t *count, size_t *p_stat);
 int an_exec(char **sv, var_list *head, size_t *count, size_t *p_stat);
 char **pre_proc(char *line, const char *delim, var_list *head, size_t *count,
-size_t *p_stat);
+size_t *p_stat, FILE *fd);
 
 /* arguement preprocessing for aliases, comments and shell replacement*/
 char **prc_cmnts(char **av);

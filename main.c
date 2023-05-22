@@ -9,22 +9,22 @@
 int main(int ac, char **av)
 {
 	var_list *env_list = NULL;
-	char *line = NULL, *delim = " \n", p = 0; /*p from pipe*/
+	char **sv, *line = NULL, *delim = " \n", p = 0; /*p from pipe*/
 	size_t n = 0, cmd_cnt = 1, exstat = 0;
 
-	(void)ac;
 	env_list = build_env_list(&env_list, environ);
 	while (1 && !p)
 	{
+		if (ac == 1)
 		_put("$ ");
-		if (_getline(&line, &n, stdin) == -1)
+		if (getline(&line, &n, stdin) == -1)
 			break;
 		p = !isatty(STDIN_FILENO);
-		av = pre_proc(line, delim, env_list, &cmd_cnt, &exstat);
-		if (!av)
+		sv = pre_proc(line, delim, env_list, &cmd_cnt, &exstat, fd);
+		if (!sv)
 			continue;
-		an_exec(av, env_list, &cmd_cnt, &exstat);
-		v_free(av);
+		an_exec(sv, env_list, &cmd_cnt, &exstat);
+		v_free(sv);
 		free(line);
 		line = NULL;
 	}
