@@ -90,6 +90,10 @@ int __unsetenv(char **av, size_t cmd_count, var_list *head);
 int cd(char **av, size_t cmd_count, var_list *head);
 
 /* error printing*/
+int _putchar_e(char c);
+int _puts_e(const char *str);
+int _put_e(const char *str);
+void print_digits_e(unsigned int n);
 void print_err(char *prc_path, size_t count, const char *err_message);
 void print_err_nf(char *prc_path, size_t count, char *cmd,
 const char *err_message);
