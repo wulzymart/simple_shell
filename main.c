@@ -1,9 +1,11 @@
 #include "main.h"
 /**
  * sigint_handler - handles ctrl + C signal
+ * @n: unused int
 */
-void sigint_handler(void)
+void sigint_handler(int n)
 {
+	(void)n;
 	_put("\n$ ");
 }
 /**

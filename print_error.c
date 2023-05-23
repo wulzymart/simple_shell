@@ -23,7 +23,7 @@ int _puts_e(const char *str)
 
 	while (*(str + i))
 	{
-		c += _putchar_e(*(str + 1));
+		c += _putchar_e(*(str + i));
 		i++;
 	}
 	c += _putchar_e('\n');
@@ -39,9 +39,9 @@ int _put_e(const char *str)
 {
 	int i = 0, c = 0;
 
-	while (*(str + 1))
+	while (*(str + i))
 	{
-		c += _putchar_e(*(str + 1));
+		c += _putchar_e(*(str + i));
 		i++;
 	}
 	return (c);
@@ -70,19 +70,5 @@ void print_digits_e(unsigned int n)
 			print_digits_e(n / 10);
 			_putchar_e(n % 10 + '0');
 		}
-	}
-}
-
-/**
- * print_e - prints a evector
- * @av: vector
- */
-void print_e(char **av)
-{
-	int i;
-
-	for (i = 0; av[i]; i++)
-	{
-		_puts_e(av[i]);
 	}
 }
