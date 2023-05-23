@@ -59,8 +59,12 @@ The aim is to develop a simple unix command interpreter in operation to `/bin/sh
 **Task 13. alias** (advanced)
 - implement the `alias` builtin command.
 - Usage: `alias [name[='value'] ...]`
+---
 
 **Task 14. variables** (advanced)
-- handles variables replacement
-- Handles the `
+- Handles variables replacement
+- Handles the `$?` variable
+- Handles the `$$` variable
 
+
+**
