@@ -1,8 +1,10 @@
 # ALX Project: `simple_shell`
 
-The aim is to develop a simple unix command interpreter in operation to `/bin/sh` with the exact same error output. 
+## Description
+Simple Shell was coded from scratch. The aim is to develop a simple unix command interpreter in similar operation to `/bin/sh`, with the exact same error output. It allows the user type in a predetermined commmand, then the shell executes the command and produces predtermined output codependent on the user's input. You can write, read, print outputs to the terminal, change directories, view the present working directory, etc.
+The shell currently handles executables that can in the variable PATH environment regardless of if the full path is available in the command or not. 
 
-## Features:
+## Project Requirements:
 
 **Task 02**
 - Handle command lines with arguments
@@ -89,5 +91,3 @@ The aim is to develop a simple unix command interpreter in operation to `/bin/sh
 - The file contains one command per line.
 - In this mode, the shell should not print a prompt and should read from `stdin`
 ---
-
-
