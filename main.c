@@ -1,5 +1,11 @@
 #include "main.h"
-
+/**
+ * sigint_handler - handles ctrl + C signal
+*/
+void sigint_handler(void)
+{
+	_put("\n$ ");
+}
 /**
  * main - simple shell project
  * @ac: arguement count
@@ -13,6 +19,7 @@ int main(int ac, char **av)
 	size_t n = 0, cmd_cnt = 1, exstat = 0;
 	FILE *fd;
 
+	signal(SIGINT, sigint_handler);
 	(void)av;
 	fd = stdin;
 	env_list = build_env_list(&env_list, environ);
@@ -20,7 +27,7 @@ int main(int ac, char **av)
 	{
 		if (ac == 1)
 		_put("$ ");
-		if (getline(&line, &n, fd) == -1)
+		if (_getline(&line, &n, fd) == -1)
 			break;
 		p = !isatty(STDIN_FILENO);
 		sv = pre_proc(line, delim, env_list, &cmd_cnt, &exstat, fd);

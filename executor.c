@@ -12,7 +12,7 @@ char *get_cmd_path(char *str, var_list *env_list)
 	int i;
 
 	if (stat(str, &statbuf) == 0)
-		return (str);
+		return (_strdup(str));
 	path = _getenv(&env_list, "PATH");
 	if (!path)
 		return (NULL);
@@ -97,9 +97,9 @@ int execute(char **av, var_list *env_list, size_t *cmd_cnt, size_t *p_stat)
 	}
 	else
 	{
-			wait(&status);
-			free(path);
-			*cmd_cnt = *cmd_cnt + 1;
+		wait(&status);
+		free(path);
+		*cmd_cnt = *cmd_cnt + 1;
 	}
 	if (WIFEXITED(status))
 		return (get_status(status, p_stat, &e));
