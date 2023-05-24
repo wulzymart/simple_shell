@@ -33,7 +33,7 @@ char *get_cmd_path(char *str, var_list *env_list)
 		cmd_pt = _strcat(cmd_pt, "/");
 		cmd_pt = _strcat(cmd_pt, str);
 		cmd_pt = _strcat(cmd_pt, "\0");
-		if (stat(cmd_pt, &statbuf) == 0)
+		if (access(cmd_pt, R_OK | X_OK) == 0)
 		{
 			v_free(paths);
 			free(path);
