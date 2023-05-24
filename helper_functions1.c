@@ -84,13 +84,12 @@ int an_exec(char **sv, var_list *head, size_t *count, size_t *p_stat, char *l)
 		}
 	}
 	if (!sep)
-		if (execute(sv, head, count, p_stat, l) == -1)
-			return (-1);
+		d = execute(sv, head, count, p_stat, l);
 	if (sep && sep == sep1)
 		if (e == 1 || (e == 2 && d == 1) || (e == 3 && d == 0))
 			if (alloc_exec(&a, &b, &c, &d, sv, head, count, p_stat, l) == -1)
 				return (-1);
-	return (0);
+	return (d == 1 ? -1 : 0);
 }
 /**
  * pre_proc - processes input before execution

@@ -72,7 +72,7 @@ int main(int ac, char **av, char **env)
 		_put("\n");
 	if (env_list)
 		free_envlist(env_list);
-	if (ret == -1)
+	if (p && ret == -1)
 		exit(127);
 	return (0);
 }
