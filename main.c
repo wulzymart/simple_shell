@@ -51,7 +51,7 @@ int main(int ac, char **av)
 	size_t n = 0, cmd_cnt = 1, exstat = 0;
 	int fd = get_file(ac, av);
 
-	signal(SIGINT, sigint_handler);
+	/*signal(SIGINT, sigint_handler);*/
 	env_list = build_env_list(&env_list, environ);
 	while (1 && !p)
 	{
