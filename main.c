@@ -27,11 +27,11 @@ int main(int ac, char **av)
 	env_list = build_env_list(&env_list, environ);
 	while (1 && !p)
 	{
-		if (ac == 1)
+		p = !isatty(STDIN_FILENO);
+		if (ac == 1 && !p)
 		_put("$ ");
 		if (_getline(&line, &n, fd) == -1)
 			break;
-		p = !isatty(STDIN_FILENO);
 		sv = pre_proc(line, delim, env_list, &cmd_cnt, &exstat, fd);
 		if (!sv)
 			continue;
