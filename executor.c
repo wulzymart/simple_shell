@@ -13,8 +13,7 @@ char *get_cmd_path(char *str, var_list *env_list)
 
 	if (stat(str, &statbuf) == 0)
 		return (_strdup(str));
-	if (_strncmp(str, "./", 2) == 0)
-		return (NULL);
+	
 	path = _getenv(&env_list, "PATH");
 	if (!path)
 		return (NULL);
