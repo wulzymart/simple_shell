@@ -70,6 +70,8 @@ int main(int ac, char **av, char **env)
 		v_free(sv);
 	}
 	free(line);
+	if (fd->_fileno > STDIN_FILENO)
+		fclose(fd);
 	if (!p && ac == 1)
 		_put("\n");
 	if (env_list)
