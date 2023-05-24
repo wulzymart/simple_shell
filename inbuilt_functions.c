@@ -78,7 +78,11 @@ int __setenv(char **av, size_t cmd_count, var_list *head, char *l)
 		return (1);
 	}
 
-	_setenv(av[1], av[2], 1, head);
+	if (_setenv(av[1], av[2], 1, head) == -1)
+	{
+		print_err(_getenv(&head, "_"), cmd_count, "error setting variable");
+		return (1);
+	};
 	return (0);
 }
 /**

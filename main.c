@@ -47,7 +47,7 @@ int get_file(int ac, char **av)
 int main(int ac, char **av)
 {
 	var_list *env_list = NULL;
-	char **sv, *line = NULL, *delim = " \n", p = 0; /*p from pipe*/
+	char **sv, *line = NULL, *delim = "\t\r\f\v\b \n", p = 0; /*p from pipe*/
 	size_t n = 0, cmd_cnt = 1, exstat = 0;
 	int fd = get_file(ac, av);
 
