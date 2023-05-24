@@ -50,7 +50,7 @@ int main(int ac, char **av, char **env)
 	var_list *env_list = NULL;
 	char **sv, *line = NULL, *delim = "\t\r\f\v\b \n", p = 0; /*p from pipe*/
 	size_t n = 0, cmd_cnt = 1, exstat = 0;
-	int fd = get_file(ac, av), ret;
+	int fd = get_file(ac, av), ret = 0;
 
 	signal(SIGINT, sigint_handler);
 	env_list = build_env_list(&env_list, env);
