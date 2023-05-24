@@ -29,7 +29,7 @@ int main(int ac, char **av)
 	{
 		if (ac == 1)
 		_put("$ ");
-		if (_getline(&line, &n, fd) == -1)
+		if (getline(&line, &n, fd) == -1)
 			break;
 		p = !isatty(STDIN_FILENO);
 		sv = pre_proc(line, delim, env_list, &cmd_cnt, &exstat, fd);

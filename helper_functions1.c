@@ -116,7 +116,7 @@ size_t *p_stat, FILE *fd)
 				l1 = v_count(av);
 					_put("> ");
 				*count = *count + 1;
-				if (_getline(&line2, &n2, fd) == -1)
+				if (getline(&line2, &n2, fd) == -1)
 				return (getline_EOF_syn_err(head, count));
 				av2 = procs(strsplt(line2, delim), p_stat, head);
 				l2 = v_count(av2);
