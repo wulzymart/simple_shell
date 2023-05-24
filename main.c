@@ -42,9 +42,10 @@ int get_file(int ac, char **av)
  * main - simple shell project
  * @ac: arguement count
  * @av: arguement vector
+ * @env: environment
  * Return: 0 if success
 */
-int main(int ac, char **av)
+int main(int ac, char **av, char **env)
 {
 	var_list *env_list = NULL;
 	char **sv, *line = NULL, *delim = "\t\r\f\v\b \n", p = 0; /*p from pipe*/
@@ -52,7 +53,7 @@ int main(int ac, char **av)
 	int fd = get_file(ac, av);
 
 	signal(SIGINT, sigint_handler);
-	env_list = build_env_list(&env_list, environ);
+	env_list = build_env_list(&env_list, env);
 	while (1 && !p)
 	{
 		p = !isatty(STDIN_FILENO);
