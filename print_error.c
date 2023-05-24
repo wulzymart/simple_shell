@@ -14,7 +14,7 @@ int _putchar_e(char c)
 
 	if (c <= 0 || j >= 1024)
 	{
-		write(2, buff, j);
+		write(STDERR_FILENO, buff, j);
 		j = 0;
 	}
 	else
