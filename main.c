@@ -65,9 +65,8 @@ int main(int ac, char **av)
 			continue;
 		an_exec(sv, env_list, &cmd_cnt, &exstat, line);
 		v_free(sv);
-		free(line);
-		line = NULL;
 	}
+	free(line);
 	if (!p)
 		_put("\n");
 	if (env_list)
