@@ -39,6 +39,8 @@ int buff_inc(char **buffer, size_t *BUFF)
 	}
 	return (0);
 }
+int end_getline(char **lineptr, size_t total, char *buffer, size_t *n,
+size_t buf, FILE *stream, ssize_t r);
 /**
  * _getline - gets inputed line and saves to lineptr
  * @lineptr: pointer to memory space to save string
@@ -82,10 +84,33 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 			if (buff_inc(&buffer, &BUFF) == -1)
 				return (-1);
 	}
+	end_getline(lineptr, total, buffer, n, buf, stream, r);
+	/*if (*lineptr)
+	(*lineptr)[total] = 0;
+	*n = buf;
+	free(buffer);
+	lseek(stream->_fileno, total, SEEK_SET);
+	return (r == (ssize_t)-1 ? -1 : (ssize_t)total ? (ssize_t)total :
+	(ssize_t)-1);*/
+}
+/**
+ * end_getline - helper function for refactoring
+ * @lineptr: line pointer
+ * @total: total read
+ * @buffer: buffer
+ * @buf: size of lineptr
+ * @r: read value
+ * @n: lineptr size address
+ * stream: file stream
+*/
+int end_getline(char **lineptr, size_t total, char *buffer, size_t *n,
+size_t buf,FILE *stream, ssize_t r)
+{
 	if (*lineptr)
 	(*lineptr)[total] = 0;
 	*n = buf;
 	free(buffer);
+	lseek(stream->_fileno, total, SEEK_SET);
 	return (r == (ssize_t)-1 ? -1 : (ssize_t)total ? (ssize_t)total :
 	(ssize_t)-1);
 }
