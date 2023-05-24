@@ -1,58 +1,48 @@
 #include "main.h"
 /**
- * _strlen - count length of string
- * @s: string to be counted address of string
- * Return: returns the length
- */
-int _strlen(const char *s)
+ * sigint_handler - handles ctrl + C signal
+ * @n: unused int
+*/
+void sigint_handler(int n)
 {
-	int i = 0;
-
-	while (*(s + i))
-	{
-		i++;
-	}
-	return (i);
+	(void)n;
+	_put("\n$ ");
 }
 /**
- * main - entry point
+ * main - simple shell project
  * @ac: arguement count
  * @av: arguement vector
- * @env: environment
- * Return: 0
+ * Return: 0 if success
 */
-int main(int ac, char **av, char **env)
+int main(int ac, char **av)
 {
-	char *line = NULL, *sv[2];
-	int p = 0;
-	size_t n = 0;
-	pid_t a;
-	struct stat buff;
+	var_list *env_list = NULL;
+	char **sv, *line = NULL, *delim = " \n", p = 0; /*p from pipe*/
+	size_t n = 0, cmd_cnt = 1, exstat = 0;
+	FILE *fd;
 
-	(void)ac;
+	signal(SIGINT, sigint_handler);
+	(void)av;
+	fd = stdin;
+	env_list = build_env_list(&env_list, environ);
 	while (1 && !p)
 	{
+		if (ac == 1)
 		_put("$ ");
-		if (getline(&line, &n, stdin) == -1)
+		if (getline(&line, &n, fd) == -1)
 			break;
-		p = !isatty(0);
-		line[_strlen(line) - 1] = 0;
-		if (stat(line, &buff) == -1)
-		{
-			_put(av[0]);
-			_puts(": No such file or directory");
-		}
-		sv[0] = line;
-		sv[1] = NULL;
-		a = fork();
-		if (a == 0)
-			execve(line, sv, env);
-		else
-			wait(NULL);
+		p = !isatty(STDIN_FILENO);
+		sv = pre_proc(line, delim, env_list, &cmd_cnt, &exstat, fd);
+		if (!sv)
+			continue;
+		an_exec(sv, env_list, &cmd_cnt, &exstat);
+		v_free(sv);
 		free(line);
 		line = NULL;
 	}
 	if (!p)
 		_putchar('\n');
+	if (env_list)
+		free_envlist(env_list);
 	return (0);
 }
