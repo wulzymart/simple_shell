@@ -35,7 +35,7 @@ int main(int ac, char **av)
 		sv = pre_proc(line, delim, env_list, &cmd_cnt, &exstat, fd);
 		if (!sv)
 			continue;
-		an_exec(sv, env_list, &cmd_cnt, &exstat);
+		an_exec(sv, env_list, &cmd_cnt, &exstat, line);
 		v_free(sv);
 		free(line);
 		line = NULL;

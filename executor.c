@@ -13,6 +13,8 @@ char *get_cmd_path(char *str, var_list *env_list)
 
 	if (stat(str, &statbuf) == 0)
 		return (_strdup(str));
+	if (_strncmp(str, "./", 2) == 0)
+		return (NULL);
 	path = _getenv(&env_list, "PATH");
 	if (!path)
 		return (NULL);
@@ -63,18 +65,20 @@ int get_status(int status, size_t *p_stat, int *e)
  * @env_list: environment list
  * @cmd_cnt: command count
  * @p_stat: last exit status
+ * @l: for exit free
  * Return: 0 if success, -1
 */
-int execute(char **av, var_list *env_list, size_t *cmd_cnt, size_t *p_stat)
+int execute(char **av, var_list *env_list, size_t *cmd_cnt, size_t *p_stat,
+char *l)
 {
-	int (*f)(char **av, size_t cmd_count, var_list *head), i;
+	int (*f)(char **av, size_t cmd_count, var_list *head, char *l), i;
 	char *path;
 	int a, e = 0, status; /* e records return of execve, to check failure*/
 
 	f = inb_functs(av[0]);
 	if (f != NULL)
 	{
-		i = f(av, *cmd_cnt, env_list);
+		i = f(av, *cmd_cnt, env_list, l);
 		*cmd_cnt = *cmd_cnt + 1;
 		if (i == 1)
 			return (1);

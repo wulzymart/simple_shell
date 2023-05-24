@@ -4,7 +4,7 @@
  * @name: name of function to check for
  * Return: function if found else NULL
 */
-int (*inb_functs(char *name))(char **, size_t, var_list *)
+int (*inb_functs(char *name))(char **, size_t, var_list *, char *)
 {
 	int i = 0;
 	inbuilt inbuilt_fcs[] = {

@@ -30,7 +30,7 @@ typedef struct environ
 typedef struct inbuilt_function
 {
 	char *name;
-	int (*f)(char **av, size_t cmd_count, var_list *head);
+	int (*f)(char **av, size_t cmd_count, var_list *head, char *l);
 } inbuilt;
 /*environment variable inherited from calling process*/
 extern char **environ;
@@ -83,12 +83,12 @@ int overwrite_env_index(var_list **head, int index, char *variable);
 int del_var_at_index(var_list **head, unsigned int index);
 
 /*handling inbuilt functions*/
-int (*inb_functs(char *name))(char **, size_t, var_list *);
-int __exit(char **av, size_t cmd_count, var_list *head);
-int env(char **av, size_t cmd_count, var_list *head);
-int __setenv(char **av, size_t cmd_count, var_list *head);
-int __unsetenv(char **av, size_t cmd_count, var_list *head);
-int cd(char **av, size_t cmd_count, var_list *head);
+int (*inb_functs(char *name))(char **, size_t, var_list *, char *);
+int __exit(char **av, size_t cmd_count, var_list *head, char *l);
+int env(char **av, size_t cmd_count, var_list *, char *l);
+int __setenv(char **av, size_t cmd_count, var_list *head, char *l);
+int __unsetenv(char **av, size_t cmd_count, var_list *head, char *l);
+int cd(char **av, size_t cmd_count, var_list *head, char *l);
 
 /* error printing*/
 int _putchar_e(char c);
@@ -111,8 +111,8 @@ int check_args(char **av, var_list *head, size_t count);
 char **v_free_NULL(char **av);
 char **getline_EOF_syn_err(var_list *head, size_t *count);
 int alloc_exec(int *f, int *g, int *h, int *d, char **sv,
-var_list *head, size_t *count, size_t *p_stat);
-int an_exec(char **sv, var_list *head, size_t *count, size_t *p_stat);
+var_list *head, size_t *count, size_t *p_stat, char *l);
+int an_exec(char **sv, var_list *head, size_t *count, size_t *p_stat, char *l);
 char **pre_proc(char *line, const char *delim, var_list *head, size_t *count,
 size_t *p_stat, FILE *fd);
 
@@ -123,5 +123,6 @@ char **sh_rep(char **av, size_t *p_st, var_list *head);
 char **procs(char **av, size_t *p_st, var_list *head);
 
 /*app execution*/
-int execute(char **av, var_list *env_list, size_t *cmd_cnt, size_t *p_stat);
+int execute(char **av, var_list *env_list, size_t *cmd_cnt, size_t *p_stat,
+char *l);
 #endif

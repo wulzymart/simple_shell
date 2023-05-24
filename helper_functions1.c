@@ -31,10 +31,11 @@ char **v_free_NULL(char **av)
  * @head: head of environ list
  * @count: command count
  * @p_stat: previous exit status
+ * @l: line for exit free
  * Return: 0 on success -1 if failed
 */
 int alloc_exec(int *f, int *g, int *h, int *d, char **sv,
-var_list *head, size_t *count, size_t *p_stat)
+var_list *head, size_t *count, size_t *p_stat, char *l)
 {
 	int i, a = *f, b = *g, c = *h;
 	char **av;
@@ -46,7 +47,7 @@ var_list *head, size_t *count, size_t *p_stat)
 	c = b;
 	for (i = b ; i <  a ; i++)
 	av[i - c] = _strdup(sv[b++]);
-	*d = execute(av, head, count, p_stat);
+	*d = execute(av, head, count, p_stat, l);
 	v_free(av);
 	*f = a;
 	*g = b;
@@ -59,9 +60,10 @@ var_list *head, size_t *count, size_t *p_stat)
  * @head: head of environ list
  * @count: command count
  * @p_stat: previous exit status
+ * @l: for exit free
  * Return: 0 success, -1 failure
 */
-int an_exec(char **sv, var_list *head, size_t *count, size_t *p_stat)
+int an_exec(char **sv, var_list *head, size_t *count, size_t *p_stat, char *l)
 {
 	int a, b, c, d, e, sep = 0, sep1;
 
@@ -71,7 +73,7 @@ int an_exec(char **sv, var_list *head, size_t *count, size_t *p_stat)
 		if (issep(sv[a], &e))
 		{
 			sep++;
-			if (alloc_exec(&a, &b, &c, &d, sv, head, count, p_stat) == -1)
+			if (alloc_exec(&a, &b, &c, &d, sv, head, count, p_stat, l) == -1)
 				return (-1);
 			b = a + 1;
 			if (e > 1)
@@ -82,10 +84,10 @@ int an_exec(char **sv, var_list *head, size_t *count, size_t *p_stat)
 		}
 	}
 	if (!sep)
-		execute(sv, head, count, p_stat);
+		execute(sv, head, count, p_stat, l);
 	if (sep && sep == sep1)
 		if (e == 1 || (e == 2 && d == 1) || (e == 3 && d == 0))
-			if (alloc_exec(&a, &b, &c, &d, sv, head, count, p_stat) == -1)
+			if (alloc_exec(&a, &b, &c, &d, sv, head, count, p_stat, l) == -1)
 				return (-1);
 	return (0);
 }
