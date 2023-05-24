@@ -14,9 +14,9 @@ void sigint_handler(int n)
  * @ac: arguement count
  * Return: file descriptor or -1 if error
 */
-int get_file(int ac, char **av)
+FILE *get_file(int ac, char **av)
 {
-	int fd;
+	FILE *fd;
 
 	if (ac > 2)
 	{
@@ -24,10 +24,10 @@ int get_file(int ac, char **av)
 		exit(98);
 	}
 	if (ac == 1)
-		fd = STDIN_FILENO;
+		fd = stdin;
 	else
-		fd = open(av[1], O_RDONLY);
-	if (fd == -1)
+		fd = fopen(av[1], "r");
+	if (fd == NULL)
 	{
 		_put_e(av[0]);
 		_put_e(": 0: cannot open ");
@@ -48,18 +48,20 @@ int get_file(int ac, char **av)
 int main(int ac, char **av, char **env)
 {
 	var_list *env_list = NULL;
-	char **sv, *line = NULL, *delim = "\t\r\f\v\b \n", p = 0; /*p from pipe*/
+	char **sv, *line = NULL, *delim = "\t\r\f\v\b \n", p = 0, ret = 0;
 	size_t n = 0, cmd_cnt = 1, exstat = 0;
-	int fd = get_file(ac, av), ret = 0;
+	ssize_t r = 1;
+	FILE *fd = get_file(ac, av);
 
 	signal(SIGINT, sigint_handler);
 	env_list = build_env_list(&env_list, env);
-	while (1 && !p)
+	while (1 && (!p || r != 0))
 	{
 		p = !isatty(STDIN_FILENO);
 		if (ac == 1 && !p)
 		_put("$ ");
-		if (_getline(&line, &n, fd) == -1)
+		r = getline(&line, &n, fd);
+		if (r == -1)
 			break;
 		sv = pre_proc(line, delim, env_list, &cmd_cnt, &exstat, fd);
 		if (!sv)
@@ -68,7 +70,7 @@ int main(int ac, char **av, char **env)
 		v_free(sv);
 	}
 	free(line);
-	if (!p)
+	if (!p && ac == 1)
 		_put("\n");
 	if (env_list)
 		free_envlist(env_list);

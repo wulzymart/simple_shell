@@ -43,7 +43,7 @@ void print_digits(unsigned int n);
 void print(char **av);
 
 /*get line function*/
-ssize_t _getline(char **lineptr, size_t *n, int stream);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 
 /*string manipulations*/
 int _atoi(char *s);
@@ -114,7 +114,7 @@ int alloc_exec(int *f, int *g, int *h, int *d, char **sv,
 var_list *head, size_t *count, size_t *p_stat, char *l);
 int an_exec(char **sv, var_list *head, size_t *count, size_t *p_stat, char *l);
 char **pre_proc(char *line, const char *delim, var_list *head, size_t *count,
-size_t *p_stat, int fd);
+size_t *p_stat, FILE *fd);
 
 /* arguement preprocessing for aliases, comments and shell replacement*/
 char **prc_cmnts(char **av);

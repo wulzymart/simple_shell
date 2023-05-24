@@ -39,7 +39,7 @@ int buff_inc(char **buffer, size_t *BUFF)
 	return (0);
 }
 int end_getline(char **lineptr, size_t total, char *buffer, size_t *n,
-size_t buf, int stream, ssize_t r, size_t *start);
+size_t buf, FILE * stream, ssize_t r, size_t *start);
 /**
  * _getline - gets inputed line and saves to lineptr
  * @lineptr: pointer to memory space to save string
@@ -47,7 +47,7 @@ size_t buf, int stream, ssize_t r, size_t *start);
  * @stream: pointer to file stream
  * Return: -1 on failure, else number of read charcters
 */
-ssize_t _getline(char **lineptr, size_t *n, int stream)
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
 	static size_t buf, BUFF, start;
 	ssize_t r;
@@ -55,11 +55,11 @@ ssize_t _getline(char **lineptr, size_t *n, int stream)
 	char *buffer;
 
 	BUFF = 2048;
-	if (stream == 0)
+	if (stream->_fileno == 0)
 		start = 0;
 	if (gl_rf1(lineptr, &buffer, n, BUFF, &buf, &old) == -1)
 		return (-1);
-	while ((r = read(stream, buffer + buff_pos, BUFF)) > 0)
+	while ((r = read(stream->_fileno, buffer + buff_pos, BUFF)) > 0)
 	{
 		for (j = 0; j < (size_t)r; j++)
 		{
@@ -100,14 +100,14 @@ ssize_t _getline(char **lineptr, size_t *n, int stream)
  * Return: number of bytes read
 */
 int end_getline(char **lineptr, size_t total, char *buffer, size_t *n,
-size_t buf, int stream, ssize_t r, size_t *start)
+size_t buf, FILE *stream, ssize_t r, size_t *start)
 {
 	if (*lineptr)
 	(*lineptr)[total] = 0;
 	*n = buf;
 	free(buffer);
 	*start = *start + total;
-	lseek(stream, *start, SEEK_SET);
+	fseek(stream, *start, SEEK_SET);
 	return (r == (ssize_t)-1 ? -1 : (ssize_t)total ? (ssize_t)total :
 	(ssize_t)-1);
 }

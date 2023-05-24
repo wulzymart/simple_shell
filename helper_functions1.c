@@ -102,7 +102,7 @@ int an_exec(char **sv, var_list *head, size_t *count, size_t *p_stat, char *l)
  * Return: arguement vectors
 */
 char **pre_proc(char *line, const char *delim, var_list *head, size_t *count,
-size_t *p_stat, int fd)
+size_t *p_stat, FILE *fd)
 {
 	int i, d, l1, l2, m;
 	char *line2 = NULL, **av, **av2;
@@ -116,10 +116,10 @@ size_t *p_stat, int fd)
 			while (d && m > 1)
 			{
 				l1 = v_count(av);
-				if (fd == 0)
+				if (fd->_fileno == 0)
 					_put("> ");
 				*count = *count + 1;
-				if (_getline(&line2, &n2, fd) == -1)
+				if (getline(&line2, &n2, fd) == -1)
 				return (getline_EOF_syn_err(head, count));
 				av2 = procs(strsplt(line2, delim), p_stat, head);
 				l2 = v_count(av2);
