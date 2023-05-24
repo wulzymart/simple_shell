@@ -9,7 +9,20 @@
  */
 int _putchar(char c)
 {
-	return (write(1, &c, 1));
+	static char buff[1024];
+	static int j;
+
+	if (c <= 0 || j >= 1024)
+	{
+		write(1, buff, j);
+		j = 0;
+	}
+	else
+	{
+		buff[j] = c;
+		j++;
+	}
+	return (1);
 }
 /**
  * _puts - prints string followed by new line
@@ -27,6 +40,7 @@ int _puts(const char *str)
 		i++;
 	}
 	c += _putchar('\n');
+	_putchar(-1);
 	return (c);
 }
 /**
@@ -44,6 +58,7 @@ int _put(const char *str)
 		c += _putchar(*(str + i));
 		i++;
 	}
+	_putchar(-1);
 	return (c);
 }
 /**
@@ -70,6 +85,7 @@ void print_digits(unsigned int n)
 			_putchar(n % 10 + '0');
 		}
 	}
+	_putchar(-1);
 }
 /**
  * print - prints a evector

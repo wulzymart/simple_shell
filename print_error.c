@@ -9,7 +9,20 @@
  */
 int _putchar_e(char c)
 {
-	return (write(2, &c, 1));
+	static char buff[1024];
+	static int j;
+
+	if (c <= 0 || j >= 1024)
+	{
+		write(2, buff, j);
+		j = 0;
+	}
+	else
+	{
+		buff[j] = c;
+		j++;
+	}
+	return (1);
 }
 
 /**
@@ -27,6 +40,7 @@ int _puts_e(const char *str)
 		i++;
 	}
 	c += _putchar_e('\n');
+	_putchar_e(-1);
 	return (c);
 }
 
@@ -44,6 +58,7 @@ int _put_e(const char *str)
 		c += _putchar_e(*(str + i));
 		i++;
 	}
+	_putchar_e(-1);
 	return (c);
 }
 
@@ -71,4 +86,5 @@ void print_digits_e(unsigned int n)
 			_putchar_e(n % 10 + '0');
 		}
 	}
+	_putchar_e(-1);
 }
