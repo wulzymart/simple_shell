@@ -24,16 +24,18 @@ int _strlen(const char *s)
 int main(int ac, char **av, char **env)
 {
 	char *line = NULL, *sv[2];
+	int p = 0;
 	size_t n = 0;
 	pid_t a;
 	struct stat buff;
 
 	(void)ac;
-	while (1)
+	while (1 && !p)
 	{
 		_put("$ ");
 		if (getline(&line, &n, stdin) == -1)
 			break;
+		p = !isatty(0);
 		line[_strlen(line) - 1] = 0;
 		if (stat(line, &buff) == -1)
 		{
@@ -50,6 +52,7 @@ int main(int ac, char **av, char **env)
 		free(line);
 		line = NULL;
 	}
-	_putchar('\n');
+	if (!p)
+		_putchar('\n');
 	return (0);
 }
