@@ -78,9 +78,9 @@ void print_err_sep(char *prc_path, size_t count, char *sep)
 	print_digits_e(count);
 	_put_e(": ");
 	_put_e("Syntax error: ");
-	_putchar_e('"');
+	_put_e("\"");
 	_put_e(sep);
-	_putchar_e('"');
+	_put_e("\"");
 	_puts_e(" unexpected");
 	free(prc_path);
 }

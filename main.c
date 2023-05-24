@@ -69,7 +69,7 @@ int main(int ac, char **av)
 		line = NULL;
 	}
 	if (!p)
-		_putchar('\n');
+		_put("\n");
 	if (env_list)
 		free_envlist(env_list);
 	return (0);
