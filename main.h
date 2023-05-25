@@ -30,7 +30,7 @@ typedef struct environ
 typedef struct inbuilt_function
 {
 	char *name;
-	int (*f)(char **av, size_t cmd_count, var_list *head, char *l);
+	int (*f)(char **av, size_t cmd_count, var_list *head, char *l, size_t *s);
 } inbuilt;
 /*environment variable inherited from calling process*/
 extern char **environ;
@@ -83,12 +83,13 @@ int overwrite_env_index(var_list **head, int index, char *variable);
 int del_var_at_index(var_list **head, unsigned int index);
 
 /*handling inbuilt functions*/
-int (*inb_functs(char *name))(char **, size_t, var_list *, char *);
-int __exit(char **av, size_t cmd_count, var_list *head, char *l);
-int env(char **av, size_t cmd_count, var_list *, char *l);
-int __setenv(char **av, size_t cmd_count, var_list *head, char *l);
-int __unsetenv(char **av, size_t cmd_count, var_list *head, char *l);
-int cd(char **av, size_t cmd_count, var_list *head, char *l);
+int (*inb_functs(char *name))(char **, size_t, var_list *, char *, size_t *);
+int __exit(char **av, size_t cmd_count, var_list *head, char *l, size_t *s);
+int env(char **av, size_t cmd_count, var_list *, char *l, size_t *s);
+int __setenv(char **av, size_t cmd_count, var_list *head, char *l, size_t *s);
+int __unsetenv(char **av, size_t cmd_count, var_list *head, char *l,
+size_t *s);
+int cd(char **av, size_t cmd_count, var_list *head, char *l, size_t *s);
 
 /* error printing*/
 int _putchar_e(char c);

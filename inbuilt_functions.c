@@ -5,14 +5,16 @@
  * @cmd_count: command count for error printing
  * @head: head pointer of environments linked list
  * @l: unused
+ * @s: unused
  * Return: 0 sunccess, 1 failure
 */
-int env(char **av, size_t cmd_count, var_list *head, char *l)
+int env(char **av, size_t cmd_count, var_list *head, char *l, size_t *s)
 {
 	int ac = v_count(av), i;
 	char *error = "Usage: env", **_env;
 
 	(void)l;
+	(void)s;
 	if (ac > 1)
 	{
 		print_err(_getenv(&head, "_"), cmd_count, error);
@@ -30,9 +32,10 @@ int env(char **av, size_t cmd_count, var_list *head, char *l)
  * @cmd_count: command count for error printing
  * @head: head pointer of environments linked list
  * @l: pointer to line to be freed
+ * @s: status of last command
  * Return: 0 sunccess, 1 failure
 */
-int __exit(char **av, size_t cmd_count, var_list *head, char *l)
+int __exit(char **av, size_t cmd_count, var_list *head, char *l, size_t *s)
 {
 	int ac = v_count(av);
 	int stat;
@@ -54,7 +57,7 @@ int __exit(char **av, size_t cmd_count, var_list *head, char *l)
 		free_envlist(head);
 		v_free(av);
 		free(l);
-		exit(EXIT_SUCCESS);
+		exit(*s);
 	}
 	return (0);
 }
@@ -64,14 +67,16 @@ int __exit(char **av, size_t cmd_count, var_list *head, char *l)
  * @cmd_count: command count for error printing
  * @head: head pointer of environments linked list
  * @l: unused
+ * @s: unused
  * Return: 0 sunccess, 1 failure
 */
-int __setenv(char **av, size_t cmd_count, var_list *head, char *l)
+int __setenv(char **av, size_t cmd_count, var_list *head, char *l, size_t *s)
 {
 	int ac = v_count(av);
 	char *error = "Usage: setenv VARIABLE VALUE";
 
 	(void)l;
+	(void)s;
 	if (ac != 3)
 	{
 		print_err(_getenv(&head, "_"), cmd_count, error);
@@ -91,14 +96,16 @@ int __setenv(char **av, size_t cmd_count, var_list *head, char *l)
  * @cmd_count: command count for error printing
  * @head: head pointer of environments linked list
  * @l: unused
+ * @s: unsused
  * Return: 0 sunccess, 1 failure
 */
-int __unsetenv(char **av, size_t cmd_count, var_list *head, char *l)
+int __unsetenv(char **av, size_t cmd_count, var_list *head, char *l, size_t *s)
 {
 	int ac = v_count(av);
 	char *error = "Usage: setenv VARIABLE";
 
 	(void)l;
+	(void)s;
 	if (ac != 2)
 	{
 		print_err(_getenv(&head, "_"), cmd_count, error);
@@ -113,14 +120,16 @@ int __unsetenv(char **av, size_t cmd_count, var_list *head, char *l)
  * @cmd_count: command count for error printing
  * @head: head pointer of environments linked list
  * @l: unused
+ * @s: unused
  * Return: 0 sunccess, 1 failure
 */
-int cd(char **av, size_t cmd_count, var_list *head, char *l)
+int cd(char **av, size_t cmd_count, var_list *head, char *l, size_t *s)
 {
 	int ac = v_count(av);
 	char *dir, *home, *oldpwd;
 
 	(void)l;
+	(void)s;
 	home =  _getenv(&head, "HOME");
 	oldpwd = _getenv(&head, "OLDPWD");
 	if (ac > 1)

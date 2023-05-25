@@ -1,3 +1,5 @@
 ls
 ls /
-ls /bin
+ls hbt
+exit
+

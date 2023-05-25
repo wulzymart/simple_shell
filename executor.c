@@ -71,14 +71,15 @@ int get_status(int status, size_t *p_stat, int *e)
 int execute(char **av, var_list *env_list, size_t *cmd_cnt, size_t *p_stat,
 char *l)
 {
-	int (*f)(char **av, size_t cmd_count, var_list *head, char *l), i;
+	int (*f)(char **av, size_t cmd_count, var_list *head, char *l, size_t *s);
+	int i;
 	char *path;
 	int a, e = 0, status; /* e records return of execve, to check failure*/
 
 	f = inb_functs(av[0]);
 	if (f != NULL)
 	{
-		i = f(av, *cmd_cnt, env_list, l);
+		i = f(av, *cmd_cnt, env_list, l, p_stat);
 		*cmd_cnt = *cmd_cnt + 1;
 		if (i == 1)
 			return (1);
@@ -89,6 +90,7 @@ char *l)
 	{
 		print_err_nf(_getenv(&env_list, "_"), *cmd_cnt, av[0], "not found");
 		*cmd_cnt = *cmd_cnt + 1;
+		*p_stat = 2;
 		return (1);
 	}
 	a = fork();
