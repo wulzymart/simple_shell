@@ -105,6 +105,8 @@ char **sh_rep(char **av, size_t *p_st, var_list *head)
 		else
 			if (_strncmp(av[i], "$", 1) == 0)
 			{
+				if (_strcmp(av[i], "$") == 0)
+					continue;
 				sv = strsplt(av[i], "$");
 				free(av[i]);
 				var = _strdup(sv[0]);
