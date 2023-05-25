@@ -30,10 +30,9 @@ FILE *get_file(int ac, char **av)
 	if (fd == NULL)
 	{
 		_put_e(av[0]);
-		_put_e(": 0: cannot open ");
-		_put_e(av[1]);
-		_puts_e(": No such file");
-		exit(98);
+		_put_e(": 0: Cant open ");
+		_puts_e(av[1]);
+		exit(127);
 
 	}
 	return (fd);
