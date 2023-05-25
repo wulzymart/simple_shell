@@ -16,6 +16,11 @@ char **prc_cmnts(char **av)
 		if (_strncmp(av[i], "#", 1) == 0)
 		{
 			j = i;
+			if (i == 0)
+			{
+				v_free(av);
+				return (NULL);
+			}
 			break;
 		}
 	}
@@ -79,11 +84,12 @@ char **reset_vec(char **av, int old_c, int new_c)
 */
 char **sh_rep(char **av, size_t *p_st, var_list *head)
 {
-	int i, c = v_count(av), fail = 0;
+	int i, c, fail = 0;
 	char **sv, *var, *res;
 
 	if (!av)
 		return (NULL);
+	c = v_count(av);
 	for (i = 0 ; av[i] ; i++)
 	if (_strcmp(av[i], "$$") == 0)
 	{
@@ -127,6 +133,8 @@ char **sh_rep(char **av, size_t *p_st, var_list *head)
 char **procs(char **av, size_t *p_st, var_list *head)
 {
 	if (!av)
+	{
 		return (NULL);
+	}
 	return (sh_rep(prc_cmnts(av), p_st, head));
 }
