@@ -76,6 +76,8 @@ int is_number(const char *str)
 
 	for (i = 0 ; str[i] ; i++)
 	{
+		while (str[i] == '-')
+			i++;
 		if (str[i] < '0' || str[i] > '9')
 			return (0);
 	}

@@ -48,7 +48,9 @@ int __exit(char **av, size_t cmd_count, var_list *head, char *l, size_t *s)
 			free_envlist(head);
 			v_free(av);
 			free(l);
-			exit(stat);
+			if (stat < 0)
+				exit(2);
+			exit(stat % 256);
 		}
 		print_exit_err(_getenv(&head, "_"), cmd_count, av[1]);
 	}
